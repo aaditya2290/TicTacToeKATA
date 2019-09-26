@@ -10,13 +10,55 @@ public class TicTacToe {
 	public String move(int i,int j)
 
 	{
+		if (isGameCompleted())
+		return "Invalid move as game is already completed.";
+		
 		if (isEmptyPosition(i,j))
 			board[i][j]=currentValue;
 		else
 			return "Position is already occupied.";
+		
 		currentValue=-currentValue;
 		return arrayToString(board);
 
+	}
+	
+	public boolean isGameCompleted()
+	{
+		if  (getGameStatus()>0)
+		return true;
+		else
+		return false;
+		
+	}
+	
+	public int getGameStatus()
+	{
+		int drawnGame=3;
+		int winX=1;
+		int winO=2;
+		int gameInProgress=0;
+		
+		for (int i=0;i<2;i++)
+		if ((board[i][0]==1 && board[i][1]==1 && board[i][2]==1)||(board[0][i]==1 && board[1][i]==1 && board[2][i]==1))
+		return winX;
+		else
+		if ((board[i][0]==-1 && board[i][1]==-1 && board[i][2]==-1)||(board[0][i]==-1 && board[1][i]==-1 && board[2][i]==-1)) 
+		return winO;
+		
+		if ((board[0][0]==1 && board[1][1]==1 && board[2][2]==1)||(board[0][2]==1 && board[1][1]==1 && board[2][0]==1))
+		return winX;
+		else
+		if ((board[0][0]==-1 && board[1][1]==-1 && board[2][2]==-1)||(board[0][2]==-1 && board[1][1]==-1 && board[2][0]==-1))
+	    return winO;
+		
+		for (int j=0;j<2;j++)
+		for (int k=0;k<2;k++)
+		if (isEmptyPosition(j,k))
+		return gameInProgress;
+		
+		return drawnGame;
+	
 	}
 
 	public boolean isEmptyPosition(int i,int j)
